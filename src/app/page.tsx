@@ -10,7 +10,7 @@ export default function Home() {
   const [title, setTitle] = useState("")
   const [errors, setErrors] = useState<{ title?: string; url?: string }>({})
 
-  // ---------------- AUTH ----------------
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session)
@@ -29,7 +29,7 @@ export default function Home() {
     }
   }, [])
 
-  // ---------------- REALTIME ----------------
+
   useEffect(() => {
     if (!session) return
 
@@ -47,7 +47,7 @@ export default function Home() {
     }
   }, [session])
 
-  // ---------------- FETCH ----------------
+
   const fetchBookmarks = async () => {
     const { data } = await supabase
       .from("bookmarks")
@@ -57,7 +57,7 @@ export default function Home() {
     setBookmarks(data || [])
   }
 
-  // ---------------- ADD ----------------
+
   const addBookmark = async () => {
     const newErrors: { title?: string; url?: string } = {}
 
@@ -87,13 +87,13 @@ export default function Home() {
     fetchBookmarks()
   }
 
-  // ---------------- DELETE ----------------
+
   const deleteBookmark = async (id: string) => {
     await supabase.from("bookmarks").delete().eq("id", id)
     fetchBookmarks()
   }
 
-  // ================= LOGIN SCREEN =================
+
   if (!session)
     return (
       <div className="flex h-screen items-center justify-center bg-gray-100">
@@ -118,7 +118,7 @@ export default function Home() {
       </div>
     )
 
-  // ================= MAIN APP =================
+
   return (
     <div className="min-h-screen bg-gray-100 py-10">
       <div className="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-8">
