@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔖 Smart Bookmark App
 
-## Getting Started
+A modern full-stack bookmark manager built with **Next.js (App Router)**, **Supabase**, and **Tailwind CSS**.
 
-First, run the development server:
+Users can securely log in using Google OAuth and manage their personal bookmarks with real-time updates.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ Google OAuth Authentication
+- ✅ Private user-specific bookmarks
+- ✅ Add & Delete bookmarks
+- ✅ Real-time updates using Supabase Realtime
+- ✅ Secure Row Level Security (RLS)
+- ✅ Responsive modern UI with Tailwind CSS
+- ✅ Deployed on Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠 Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend & Backend:** Next.js (App Router)
+- **Authentication & Database:** Supabase
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔐 Authentication
 
-## Deploy on Vercel
+- Users log in using Google OAuth.
+- Supabase manages sessions securely.
+- Only authenticated users can access bookmarks.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🗄 Database Structure
+
+### Table: `bookmarks`
+
+| Column      | Type      |
+|------------|----------|
+| id         | uuid (PK) |
+| user_id    | uuid (FK → auth.users) |
+| title      | text |
+| url        | text |
+| created_at | timestamp |
+
+---
+
+## 🔒 Security (Row Level Security)
+
+RLS is enabled to ensure:
+
+- Users can only view their own bookmarks.
+- Users can only insert bookmarks for themselves.
+- Users can only delete their own bookmarks.
+
+Policy condition used:
+
+```sql
+auth.uid() = user_id
